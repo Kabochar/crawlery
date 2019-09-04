@@ -1,8 +1,12 @@
-# Crawler
+# Crawlery
+
+
+
+## 历史版本
 
 ### V0.1：单任务版
 
-流程说明：
+#### 流程说明
 
 1，配置种子请求，项目的初始入口。
 
@@ -22,17 +26,19 @@
 
 任务队列：requests []Request
 
+#### 劣势
 
+每次都要请求页面，然后才能解析数据，才能请求请求下一个页面。整个过程获取页面数据速度缓慢。
 
 ### V0.2：简单并发版
 
-涉及文件：
+#### 涉及文件
 
 engine/concurrent.go，engine/worker.go，engine/engine.go->engine/simple.go
 
 scheduler/scheduler.go
 
-涉及改良点：
+#### 涉及改良点
 
 将 Fetchet 模块 和 Parse 模块合并成一个 Worker 模块，然后并发执行 Worker 模块。
 
@@ -50,11 +56,15 @@ scheduler/scheduler.go
 
 
 
+#### 劣势
 
+调度器为每一个 Request 创建一个 goroutine，每个 goroutine 往 Worker 队列中分发任务，发完就结束。所有的 Worker 都在抢一个 channel 的任务。
+
+不足：控制力弱，所有的 Worker 在 抢同一个 channel 中的任务，没办法控制给哪一个 Worker 任务。
 
 ### V0.3 队列实现并发任务调度
 
-涉及文件：
+#### 涉及文件
 
 engine/concurrent.go
 
@@ -62,7 +72,7 @@ scheduler/queued.go
 
 main.go
 
-涉及改良点：
+#### 涉及改良点
 
 -   当 Scheduler  接收到一个 Request 后，不直接发给 Worker，不能直接为每个 创建一个 goroutine，这里使用一个 Request 队列。
 -   相对 Worker 实现更多的控制，可以决定把任务分发给哪一个 Woker，这里需要一个 Worker 队列。
