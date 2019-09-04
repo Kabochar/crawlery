@@ -7,8 +7,8 @@ import (
 )
 
 func main() {
-	e := engine.ConcurrentEngine{ // 配置爬虫引擎
-		Scheduler:   &scheduler.SimpleScheduler{},
+	e := engine.ConcurrentEngine{
+		Scheduler:   &scheduler.QueuedScheduler{},// 这里调用并发调度器
 		WorkerCount: 50,
 	}
 	e.Run(engine.Request{        // 配置爬虫目标信息

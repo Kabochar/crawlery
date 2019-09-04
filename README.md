@@ -47,3 +47,25 @@ scheduler/scheduler.go
 任务调度器 Scheduler：
 
 ![1567504483958](pics/1567504483958.png)
+
+
+
+
+
+### V0.3 队列实现并发任务调度
+
+涉及文件：
+
+engine/concurrent.go
+
+scheduler/queued.go
+
+main.go
+
+涉及改良点：
+
+-   当 Scheduler  接收到一个 Request 后，不直接发给 Worker，不能直接为每个 创建一个 goroutine，这里使用一个 Request 队列。
+-   相对 Worker 实现更多的控制，可以决定把任务分发给哪一个 Woker，这里需要一个 Worker 队列。
+-   有了 Request 和 Worker ，可以选择性把 Request 发送给 选择的 Worker。
+
+![1567511809466](pics/1567511809466.png)
