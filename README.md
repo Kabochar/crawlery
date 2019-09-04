@@ -22,3 +22,28 @@
 
 任务队列：requests []Request
 
+
+
+### V0.2：简单并发版
+
+涉及文件：
+
+engine/concurrent.go，engine/worker.go，engine/engine.go->engine/simple.go
+
+scheduler/scheduler.go
+
+涉及改良点：
+
+将 Fetchet 模块 和 Parse 模块合并成一个 Worker 模块，然后并发执行 Worker 模块。
+
+-   执行多个 worker ，同时每个 worker 任务接受一个 Request 请求，解析页面数据，输出解析的 Requests 和 Item。
+-   存在多个 Request 和 Worker，所以还需要 Scheduler 模块，负责对请求任务的调度处理。
+-   其中 Engine 和 Scheduler 是一个 goroutine ，Worker 包含多个 goroutine，各个模块之间都是用channel进行连接。
+
+并发版设计：
+
+![1567503494006](pics/1567503494006.png)
+
+任务调度器 Scheduler：
+
+![1567504483958](pics/1567504483958.png)

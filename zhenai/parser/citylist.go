@@ -14,7 +14,7 @@ func ParseCityList(bytes []byte) engine.ParseResult {
 	// 第一个[]表示匹配到多少条数据，第二个[]表示匹配的数据中要提取的任容
 	submatch := re.FindAllSubmatch(bytes, -1)
 	result := engine.ParseResult{}
-	limit := 3
+	limit := 10
 	for _, item := range submatch {
 		result.Items = append(result.Items, "City:"+string(item[2]))
 		result.Requests = append(result.Requests, engine.Request{
