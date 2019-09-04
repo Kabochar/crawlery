@@ -79,3 +79,20 @@ main.go
 -   有了 Request 和 Worker ，可以选择性把 Request 发送给 选择的 Worker。
 
 ![1567511809466](pics/1567511809466.png)
+
+
+
+### 改良重构
+
+不同调度的区别：每个 worker 一个 channel OR 所有 worker 共用一个 channel。
+
+定义一个 WorkerChan 函数 决定调度方式。
+
+#### 涉及文件
+
+engine/concurrent.go，engine/simple.go
+
+scheduler/queued.go，scheduler/simple.go
+
+main.go
+

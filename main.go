@@ -8,10 +8,11 @@ import (
 
 func main() {
 	e := engine.ConcurrentEngine{
-		Scheduler:   &scheduler.QueuedScheduler{},// 这里调用并发调度器
+		// Scheduler: &scheduler.QueuedScheduler{},    // 队列实现调度器
+		Scheduler:   &scheduler.SimpleScheduler{},    // 简单并发调度
 		WorkerCount: 50,
 	}
-	e.Run(engine.Request{        // 配置爬虫目标信息
+	e.Run(engine.Request{
 		Url:       "http://www.zhenai.com/zhenghun",
 		ParseFunc: parser.ParseCityList,
 	})

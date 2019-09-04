@@ -5,8 +5,11 @@ import (
 	"log"
 )
 
+// 单任务版
+type SimpleEngine struct{}
+
 // 任务执行函数
-func Run(seeds ...Request) {
+func (e SimpleEngine) Run(seeds ...Request) {
 	// 建立任务队列
 	var requests []Request
 	// 把传入的任务添加到任务队列
