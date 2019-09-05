@@ -82,7 +82,7 @@ main.go
 
 
 
-### 改良重构
+### V0.4 改良重构
 
 不同调度的区别：每个 worker 一个 channel OR 所有 worker 共用一个 channel。
 
@@ -96,3 +96,22 @@ scheduler/queued.go，scheduler/simple.go
 
 main.go
 
+
+
+### V0.5 简单的数据存储
+
+注意点：数据的存储要比数据的产生快！这里使用 goroutine 进行分发存储操作，保证时效性。
+
+#### 涉及文件
+
+engine/concurrent.go
+
+persist/itemsaver.go
+
+main.go
+
+
+
+### 参考
+
+图片来源：jsfantasy@<https://segmentfault.com/u/jsfantasy>

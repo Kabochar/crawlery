@@ -1,17 +1,16 @@
 package engine
 
-import "log"
-
 // 并发引擎
 type ConcurrentEngine struct {
-	Scheduler   Scheduler    // 任务调度器
-	WorkerCount int            // 任务并发数量
+	Scheduler   Scheduler // 任务调度器
+	WorkerCount int       // 任务并发数量
+	ItemChan    chan interface{} // 内容管道
 }
 
 // 任务调度器
 type Scheduler interface {
 	ReadyNotifier
-	Submit(request Request) // 提交任务
+	Submit(request Request)   // 提交任务
 	WorkerChan() chan Request // 自动分配，每个 worker 一个 channel OR 所有 worker 共用一个 channel。
 	Run()
 }
@@ -39,13 +38,15 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 		e.Scheduler.Submit(request)
 	}
 
-	itemCount := 0
+	// itemCount := 0
 	for {
 		// 接受 Worker 的解析结果
-		result := <-out
+		result := <- out
 		for _, item := range result.Items {
-			log.Printf("Got item: #%d: %v\n", itemCount, item)
-			itemCount++
+			// 开启 goroutine，把数据发送到 ItemSaver，这里需要保证 保存的比数据产生的快
+			go func() { e.ItemChan <- item }()
+			// log.Printf("Got item: #%d: %v\n", itemCount, item)
+			// itemCount++
 		}
 
 		// 然后把 Worker 解析出的 Request 送给 Scheduler

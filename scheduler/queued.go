@@ -5,10 +5,10 @@ import "crawler/engine"
 // 使用队列来调度任务
 
 type QueuedScheduler struct {
-	requestChan chan engine.Request        // Request channel
+	requestChan chan engine.Request // Request channel
 	// Worker channel
 	// 其中每一个Worker是一个 chan engine.Request 类型
-	workerChan  chan chan engine.Request
+	workerChan chan chan engine.Request
 }
 
 func (s *QueuedScheduler) WorkerChan() chan engine.Request {
