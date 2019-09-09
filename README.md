@@ -1,6 +1,19 @@
 # Crawlery
 
+采用 队列 + goroutine + channel 组合的方式，实现的一个高效并发调度爬虫。
 
+## How to start 快速开始
+
+设置淘宝的软件源，并开启 GO111MODULE，PowerShell 操作以下指令：
+
+```
+$env:GOPROXY = 'https://mirrors.aliyun.com/goproxy/'
+$env:GO111MODULE = 'on'
+
+go run main.go
+```
+
+一起进入 Golang 的世界吧！
 
 ## 历史版本
 
