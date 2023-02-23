@@ -3,6 +3,6 @@ module crawler
 go 1.12
 
 require (
-	golang.org/x/net v0.0.0-20190827160401-ba9fcec4b297
-	golang.org/x/text v0.3.2
+	golang.org/x/net v0.0.0-20220722155237-a158d28d115b
+	golang.org/x/text v0.3.8
 )
